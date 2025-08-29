@@ -1,0 +1,11 @@
+name: tree_sim_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12 # this should be updated asa 3.13 is fully supported by torch (which does not seem to be the case of now)
+  - numpy
+  - pandas
+  - matplotlib
+  - jupyterlab
+  - ipykernel
