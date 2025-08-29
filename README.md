@@ -1,3 +1,9 @@
+# Setup
+
+1. Clone repo
+2. conda env create --file=environment.yml
+3. open demo_sim_random_tree.ipynb
+
 # random_tree_simulation
 
 This serves as an introduction to simulating properties of size-conditioned BGW trees, via the simulation of certain random walks. There is a one-to-one correspondence between plane trees and integer valued walks. The parameter for the simulation is the offspring distribution $\mu$ and the size (i.e. the number of vertices) of a tree.
@@ -29,7 +35,7 @@ Hence, instead of simulating under the conditional probability $\mathbb P(\cdot\
 
 3. Apply the Vervaat-transform $\mathcal{V}((X_1,\dots,X_n))$.
 
-For the first step, Devroye \cite{Devroye_2012} proposed an efficient sampling method. The idea is to sample for each $i\in \{-1,0,1,2,\dots\}$ the number of jumps of size $i$, instead of sampling the jumps directly. Then, one creates a vector of the jumps in some order and applies a random permutation.
+For the first step, (Devroye)[https://www.researchgate.net/publication/220617715_Simulating_Size-constrained_GaltonWatson_Trees] proposed an efficient sampling method. The idea is to sample for each $i\in \{-1,0,1,2,\dots\}$ the number of jumps of size $i$, instead of sampling the jumps directly. Then, one creates a vector of the jumps in some order and applies a random permutation.
         
 For this method, one samples a multinomial random vector $(N_{-1},N_0,N_1,N_2,\dots)$ with parameters $(n,\mu_0,\mu_1,\mu_2,\mu_3,\dots)$. For $i \geq -1$ the random variable $N_i$ is the number of jumps of size $i$. We can calculate the sum of the increments by 
 
