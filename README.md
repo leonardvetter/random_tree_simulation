@@ -35,7 +35,7 @@ Hence, instead of simulating under the conditional probability $\mathbb P(\cdot\
 
 3. Apply the Vervaat-transform $\mathcal{V}((X_1,\dots,X_n))$.
 
-For the first step, (Devroye)[https://www.researchgate.net/publication/220617715_Simulating_Size-constrained_GaltonWatson_Trees] proposed an efficient sampling method. The idea is to sample for each $i\in \{-1,0,1,2,\dots\}$ the number of jumps of size $i$, instead of sampling the jumps directly. Then, one creates a vector of the jumps in some order and applies a random permutation.
+For the first step, [Devroye12](https://www.researchgate.net/publication/220617715_Simulating_Size-constrained_GaltonWatson_Trees) proposed an efficient sampling method. The idea is to sample for each $i\in \{-1,0,1,2,\dots\}$ the number of jumps of size $i$, instead of sampling the jumps directly. Then, one creates a vector of the jumps in some order and applies a random permutation.
         
 For this method, one samples a multinomial random vector $(N_{-1},N_0,N_1,N_2,\dots)$ with parameters $(n,\mu_0,\mu_1,\mu_2,\mu_3,\dots)$. For $i \geq -1$ the random variable $N_i$ is the number of jumps of size $i$. We can calculate the sum of the increments by 
 
@@ -48,7 +48,7 @@ There is one small issue remaining, since the offspring distribution $(\mu_k)_{k
 
 $$\mu^{(k)}_i:= \frac{\mu_i}{\mu([0,k])}, \textrm{ if } i\in \{0,\dots,k\} \textrm{ and } \mu^{(k)}_i:= 0 \textrm{ if } i>k.$$
 
-In the demo notebook, we use an example offspring distribution that is subcritical (expected number of children of one individual = m < 1) and belongs to the domain of attraction of a stable law of index $\alpha = 1$. When we condition on the size of the tree being equal to $n$, an interesting phenomenon arises, as $n \rightarrow \infty$: One vertex with macroscopic degree $(1-m)n$ emerges. (For more details see: [https://arxiv.org/abs/2503.07530])
+In the demo notebook, we use an example offspring distribution that is subcritical (expected number of children of one individual = m < 1) and belongs to the domain of attraction of a stable law of index $\alpha = 1$. When we condition on the size of the tree being equal to $n$, an interesting phenomenon arises, as $n \rightarrow \infty$: One vertex with macroscopic degree $(1-m)n$ emerges. (For more details see: (https://arxiv.org/abs/2503.07530))
 
 
 
