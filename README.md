@@ -1,10 +1,10 @@
-# Setup
+# 1. Setup
 
 1. Clone repo
 2. conda env create --file=environment.yml
 3. open demo_sim_random_tree.ipynb
 
-# random_tree_simulation
+# 2. Theory of simulating random plane trees
 
 This serves as an introduction to simulating properties of size-conditioned BGW trees, via the simulation of certain random walks. There is a one-to-one correspondence between plane trees and integer valued walks. The parameter for the simulation is the offspring distribution $\mu$ and the size (i.e. the number of vertices) of a tree.
         
@@ -47,6 +47,8 @@ There is one small issue remaining, since the offspring distribution $(\mu_k)_{k
 
 
 $$\mu^{(k)}_i:= \frac{\mu_i}{\mu([0,k])}, \textrm{ if } i\in \{0,\dots,k\} \textrm{ and } \mu^{(k)}_i:= 0 \textrm{ if } i>k.$$
+
+In the demo notebook, we use an example offspring distribution that is subcritical (expected number of children of one individual = m < 1) and belongs to the domain of attraction of a stable law of index $\alpha = 1$. When we condition on the size of the tree being equal to $n$, an interesting phenomenon arises, as $n \rightarrow \infty$: One vertex with macroscopic degree $(1-m)n$ emerges. (For more details see: [https://arxiv.org/abs/2503.07530])
 
 
 
