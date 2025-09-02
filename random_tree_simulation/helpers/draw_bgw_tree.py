@@ -19,6 +19,7 @@ import math
 import argparse
 from typing import List, Dict, Tuple
 import matplotlib.pyplot as plt
+import networkx as nx
 # ----------------------------- Tree reconstruction ----------------------------- #
 
 def reconstruct_plane_tree(children_counts: List[int]) -> Dict[int, List[int]]:
@@ -119,6 +120,68 @@ def radial_layout(children: Dict[int, List[int]],
     pos = {u: (radius[u] * math.cos(angle[u]),
                radius[u] * math.sin(angle[u])) for u in children}
     return pos
+
+def to_networkx(children: Dict[int, List[int]]) -> nx.Graph:
+    """Convert adjacency map to an undirected NetworkX graph for layout."""
+    G = nx.Graph()
+    G.add_nodes_from(children.keys())
+    for u, kids in children.items():
+        for v in kids:
+            G.add_edge(u, v)
+    return G
+
+def spring_layout_nx(children: Dict[int, List[int]],
+                     root: int = 0,
+                     seed: int | None = None,
+                     k: float | None = None,
+                     iterations: int = 1000,
+                     scale: float = 1.0,
+                     init: str = "radial",            # "none" | "tidy" | "radial"
+                     rstep: float = 1.0,
+                     fix_root: bool = False) -> Dict[int, Tuple[float, float]]:
+    """
+    Use networkx.spring_layout to place nodes.
+      - Optionally initialize from 'tidy' or 'radial' to preserve some structure.
+      - Optionally fix the root at the origin while the rest relax.
+      - k controls the optimal edge length (None lets NX choose ~1/sqrt(n)).
+    """
+    G = to_networkx(children)
+
+    # Optional initialization
+    pos0 = None
+    fixed = None
+    if init.lower() == "tidy":
+        pos0 = tidy_layout(children, root=root, ygap=1.0)
+    elif init.lower() == "radial":
+        pos0 = radial_layout(children, root=root, rstep=rstep)
+
+    if pos0 is not None:
+        # Ensure floats and (optionally) put root at center for a nice anchor
+        pos0 = {u: (float(x), float(y)) for u, (x, y) in pos0.items()}
+        if fix_root:
+            pos0[root] = (0.0, 0.0)
+            fixed = [root]
+    elif fix_root:
+        # If no init but root must be fixed, give a trivial init putting root at origin
+        pos0 = {u: (0.0, 0.0) for u in children}
+        fixed = [root]
+
+    pos = nx.spring_layout(
+        G,
+        pos=pos0,           # initial guess (None -> random)
+        fixed=fixed,        # nodes whose positions are fixed
+        seed=seed,          # reproducible randomness
+        k=k,                # optimal distance between nodes
+        iterations=iterations,
+        scale=scale,
+        center=(0.0, 0.0),
+        weight=None,        # unweighted tree edges
+        threshold=1e-4,
+        dim=2
+    )
+
+    # networkx returns a dict of numpy arrays; convert to plain floats
+    return {u: (float(p[0]), float(p[1])) for u, p in pos.items()}
 
 
 # ----------------------------- Drawing ----------------------------- #
