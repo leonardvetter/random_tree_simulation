@@ -8,10 +8,7 @@ rooted tree, sum(c) == n-1.
 Two layouts are provided:
   - "tidy": classic layered tree (root at top or bottom)
   - "radial": root at center, branches outward with angles respecting the plane order
-
-Usage examples:
-  python draw_plane_tree.py --seq 3,2,0,0,1,0,0,0 --out tree.png
-  python draw_plane_tree.py --seq "[2,0,2,0,0]" --layout radial --labels
+  - "spring": TODO
 
 """
 from __future__ import annotations
@@ -20,6 +17,7 @@ import argparse
 from typing import List, Dict, Tuple
 import matplotlib.pyplot as plt
 import networkx as nx
+import scipy as sp
 # ----------------------------- Tree reconstruction ----------------------------- #
 
 def reconstruct_plane_tree(children_counts: List[int]) -> Dict[int, List[int]]:
